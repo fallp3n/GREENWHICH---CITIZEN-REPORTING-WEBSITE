@@ -19,11 +19,14 @@ const demoReportsRequest = fetch("data/reports.json")
   .catch(() => ({}));
 
 const timelineSteps = [
-  { title: "Report submitted", copy: "Your report has been saved." },
-  { title: "AI analysis", copy: "The submitted content is checked for known or similar reports." },
-  { title: "Community review", copy: "Reviewers assess reports that need a human decision." },
-  { title: "Verdict published", copy: "The final assessment is shown on this report." }
+  { title: "Submitted", copy: "Your report has been successfully submitted." },
+  { title: "Under Review", copy: "Your report is being reviewed by the administrator." },
+  { title: "In Progress", copy: "The reported concern is currently being addressed." },
+  { title: "Assigned", copy: "Your report has been assigned to the appropriate personnel." },
+  { title: "Resolved", copy: "The reported concern has been addressed." },
+  { title: "Case Closed", copy: "Your report has been finalized and closed." }
 ];
+
 
 // Read saved report data from this browser and parse its JSON text into an object.
 const readReports = () => JSON.parse(localStorage.getItem(reportsStorageKey) || "{}");
