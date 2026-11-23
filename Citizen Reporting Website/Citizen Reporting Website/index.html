@@ -490,19 +490,27 @@
 
     <!-- Recent report rendering -->
     <script>
-        const reportsStorageKey = "suriReports";
+        const reportsStorageKey = "GREENWICH";
         const recentReportsContainer = document.querySelector("#recent-reports-list");
 
         const statusLabels = {
-            "pending": "Pending review",
-            "community-review": "Under review",
-            "verdict": "Review completed"
+
+          "submitted": "Submitted",
+          "under_review": "Under review",
+          "in_progress": "In progress",
+          "assigned": "Assigned",
+          "resolved": "Resolved",
+          "case_closed": "Case closed"
         };
+        
 
         const reportIcons = {
-            "pending": "bi-clock",
-            "community-review": "bi-people",
-            "verdict": "bi-check-circle"
+            "submitted": "bi-send",
+            "under_review": "bi-clipboard-check",
+            "in_progress": "bi-arrow-repeat",
+            "assigned": "bi-person-check",
+            "resolved": "bi-check-circle",
+            "case_closed": "bi-lock"
         };
 
         const escapeHTML = (value) => {
