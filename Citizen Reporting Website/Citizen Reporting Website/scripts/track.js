@@ -95,13 +95,13 @@ const displayReport = (report, isExample = false) => {
   trackReport.hidden = false;
   trackNumberInput.value = report.reportNumber;
 
-  setValue("#track-category", report.category);
-  setValue("#track-report-heading", report.reportNumber);
-  setValue("#track-description", report.description);
-  setValue("#track-sender", report.sender);
-  setValue("#track-date-received", formatDate(report.receivedDate));
-  setValue("#track-location", report.location);
-  setValue("#track-submitted", formatDate(report.submittedAt));
+setValue("#track-category", report.category);
+setValue("#track-report-heading", report.reportNumber);
+setValue("#track-report-title", report.title || report.reportTitle);
+setValue("#track-description", report.description);
+setValue("#track-date-submitted", formatDate(report.submittedAt));
+setValue("#track-location", report.location);
+setValue("#track-submitted", formatDate(report.submittedAt));
 
   const statusLabel = report.status === "verdict"
     ? "Verdict published"
