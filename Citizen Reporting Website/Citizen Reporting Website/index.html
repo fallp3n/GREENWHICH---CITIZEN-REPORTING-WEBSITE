@@ -1,186 +1,628 @@
+
 <!doctype html>
 <html lang="en">
-  <head>
+<head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <meta name="theme-color" content="#f7f7f2">
-    <meta name="description" content="A community space to check suspicious links and messages before they spread." >
-    <title>GREENWICH | CITIZEN REPORTING WEBSITE</title>
+    <meta name="description" content="A community website for reporting and tracking e-trike concerns.">
+    <title>GREENWICH | Citizen Reporting Website</title>
 
-    <!-- Bootstrap supplies the responsive layout and common interface styles. -->
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
-    <!-- A display font paired with a readable body font gives the page its own voice. -->
+
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=Space+Grotesk:wght@500;600;700&display=swap" rel="stylesheet">
+
     <link rel="stylesheet" href="styles/index.css">
     <link rel="stylesheet" href="styles/menu.css">
-    <link rel="stylesheet" href="styles/hero.css">
-    <link rel="stylesheet" href="styles/report-lookup.css">
-    <link rel="stylesheet" href="styles/scams.css">
-    <link rel="stylesheet" href="styles/how-it-works.css">
-    <link rel="stylesheet" href="styles/volunteer.css">
-    <link rel="stylesheet" href="styles/agencies.css">
     <link rel="stylesheet" href="styles/footer.css">
-    <script src="scripts/hero.js" defer></script>
+
     <script src="scripts/menu.js" defer></script>
     <script src="scripts/report-lookup.js" defer></script>
-    <script src="scripts/volunteer.js" defer></script>
-  </head>
-  <body>
-    <!-- A sticky header keeps the main actions close while the page is in view. -->
-    <header class="navbar navbar-expand-md sticky-top bg-light px-3 px-lg-5">
-      <div class="container-fluid">
-      <a class="navbar-brand d-flex align-items-center gap-2 mb-0" href="#home" aria-label="GREENWICH home">
-        <span class="brand-mark" aria-hidden="true">G</span>
-        <span class="brand-name fs-4 fw-bold">GREENWICH<span class="brand-period">.</span></span>
-      </a>
 
-      <button class="navbar-toggler" type="button" aria-label="Open navigation menu" aria-expanded="false" aria-controls="site-navigation">
-        <span class="navbar-toggler-icon" aria-hidden="true"></span>
-      </button>
+    <style>
+        
+        body {
+            background: #f7f7f2;
+            color: #182722;
+        }
 
-      <nav class="collapse navbar-collapse justify-content-md-end" id="site-navigation" aria-label="Main navigation">
-        <div class="navbar-nav align-items-md-center gap-md-5">
-          <a class="nav-link active" href="#home" aria-current="page">Home</a>
-          <a class="nav-link" href="#how-it-works">About</a>
-          <a class="nav-link" href="track.html">Track</a>
-          <a class="btn btn-outline-dark ms-md-2" href="report.html">Report <span aria-hidden="true">↗</span></a>
+        .navbar {
+            background: #f7f7f2;
+            border-bottom: 1px solid #e5e7df;
+        }
+
+        .brand-mark {
+            background: #c9f15d;
+            color: #182722;
+        }
+
+        .brand-period {
+            color: #ff7059;
+        }
+
+        .navbar-nav .nav-link {
+            font-weight: 600;
+        }
+
+        .home-main {
+            min-height: calc(100vh - 76px);
+            padding: 50px 20px 80px;
+        }
+
+        .welcome-panel {
+            width: 100%;
+            max-width: 900px;
+            margin: 0 auto 40px;
+            padding: 35px 30px;
+            background: #e4e7e1;
+            border-radius: 12px;
+            text-align: center;
+        }
+
+            .welcome-panel h1 {
+                font-family: var(--display-font);
+                font-size: clamp(1.5rem, 4vw, 2.5rem);
+                font-weight: 700;
+                margin-bottom: 12px;
+            }
+
+            .welcome-panel p {
+                margin: 0;
+                color: #59635e;
+            }
+
+        .recent-section {
+            width: 100%;
+            max-width: 900px;
+            margin: 0 auto;
+        }
+
+        .recent-heading {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 15px;
+            margin-bottom: 20px;
+        }
+
+            .recent-heading h2 {
+                font-family: var(--display-font);
+                font-weight: 700;
+                font-size: 1.5rem;
+                margin: 0;
+            }
+
+            .recent-heading a {
+                color: #182722;
+                font-weight: 600;
+                text-decoration: none;
+            }
+
+                .recent-heading a:hover {
+                    text-decoration: underline;
+                }
+
+        .recent-list {
+            display: flex;
+            flex-direction: column;
+            gap: 15px;
+        }
+
+        .recent-report {
+            display: flex;
+            align-items: center;
+            gap: 18px;
+            padding: 20px;
+            background: #fff;
+            border: 1px solid #dce1d9;
+            border-radius: 10px;
+            color: #182722;
+            text-decoration: none;
+            transition: transform 150ms ease, border-color 150ms ease;
+        }
+
+            .recent-report:hover {
+                transform: translateY(-2px);
+                border-color: #a8bc8a;
+                color: #182722;
+            }
+
+        .recent-report-icon {
+            flex: 0 0 64px;
+            width: 64px;
+            height: 64px;
+            display: grid;
+            place-items: center;
+            background: #edf1e8;
+            border: 1px solid #dce1d9;
+            border-radius: 8px;
+            font-size: 1.5rem;
+            color: #314128;
+        }
+
+        .recent-report-content {
+            flex: 1;
+            min-width: 0;
+        }
+
+        .recent-report-title {
+            font-family: var(--display-font);
+            font-size: 1rem;
+            font-weight: 700;
+            margin-bottom: 5px;
+        }
+
+        .recent-report-description {
+            color: #59635e;
+            font-size: 0.9rem;
+            margin-bottom: 8px;
+            overflow-wrap: anywhere;
+        }
+
+        .recent-report-meta {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 8px 14px;
+            color: #727c75;
+            font-size: 0.8rem;
+        }
+
+        .recent-report-arrow {
+            font-size: 1.25rem;
+            flex-shrink: 0;
+        }
+
+        .empty-reports {
+            padding: 35px 20px;
+            background: white;
+            border: 1px dashed #cbd3c7;
+            border-radius: 10px;
+            text-align: center;
+            color: #59635e;
+        }
+
+            .empty-reports i {
+                font-size: 2rem;
+                display: block;
+                margin-bottom: 12px;
+            }
+
+        .home-actions {
+            display: flex;
+            justify-content: center;
+            gap: 12px;
+            flex-wrap: wrap;
+            margin-top: 35px;
+        }
+
+            .home-actions .btn {
+                padding: 12px 22px;
+                font-weight: 700;
+            }
+
+        .home-report-button {
+            background: #c9f15d;
+            border: 1px solid #c9f15d;
+            color: #182722;
+        }
+
+            .home-report-button:hover {
+                background: #d8ff75;
+                border-color: #d8ff75;
+                color: #182722;
+            }
+
+        .home-track-button {
+            border: 1px solid #182722;
+            color: #182722;
+        }
+
+            .home-track-button:hover {
+                background: #182722;
+                color: white;
+            }
+
+        .home-lookup {
+            max-width: 500px;
+            margin: 50px auto 0;
+            padding: 25px;
+            border: 1px solid #dce1d9;
+            border-radius: 12px;
+            background: white;
+        }
+
+            .home-lookup h2 {
+                font-family: var(--display-font);
+                font-size: 1.3rem;
+                font-weight: 700;
+            }
+
+            .home-lookup p {
+                color: #59635e;
+                font-size: 0.9rem;
+            }
+
+            .home-lookup .form-control {
+                min-height: 46px;
+            }
+
+        .lookup-feedback {
+            color: #59635e;
+        }
+
+        .home-info {
+            padding: 50px 20px;
+            background: #e9eee4;
+            text-align: center;
+        }
+
+        .home-info-inner {
+            max-width: 750px;
+            margin: 0 auto;
+        }
+
+        .home-info h2 {
+            font-family: var(--display-font);
+            font-weight: 700;
+            margin-bottom: 15px;
+        }
+
+        .home-info p {
+            color: #59635e;
+            line-height: 1.7;
+        }
+
+        .home-info .btn {
+            margin-top: 10px;
+        }
+
+        .site-footer {
+            background: #f7f7f2;
+        }
+
+        /* Mobile */
+        @media (max-width: 767.98px) {
+            .home-main {
+                padding: 30px 16px 55px;
+            }
+
+            .welcome-panel {
+                padding: 28px 20px;
+                margin-bottom: 30px;
+            }
+
+                .welcome-panel h1 {
+                    font-size: 1.6rem;
+                }
+
+            .recent-heading h2 {
+                font-size: 1.25rem;
+            }
+
+            .recent-report {
+                gap: 12px;
+                padding: 14px;
+            }
+
+            .recent-report-icon {
+                flex-basis: 50px;
+                width: 50px;
+                height: 50px;
+                font-size: 1.2rem;
+            }
+
+            .recent-report-title {
+                font-size: 0.95rem;
+            }
+
+            .recent-report-description {
+                font-size: 0.85rem;
+            }
+
+            .recent-report-arrow {
+                font-size: 1rem;
+            }
+
+            .home-actions {
+                flex-direction: column;
+            }
+
+                .home-actions .btn {
+                    width: 100%;
+                }
+
+            .home-lookup {
+                padding: 20px;
+                margin-top: 35px;
+            }
+
+            .recent-heading {
+                align-items: flex-start;
+            }
+        }
+
+        @media (prefers-reduced-motion: reduce) {
+            .recent-report {
+                transition: none;
+            }
+
+                .recent-report:hover {
+                    transform: none;
+                }
+        }
+    </style>
+</head>
+
+<body>
+
+    <!-- Navigation -->
+    <header class="navbar navbar-expand-md sticky-top px-3 px-lg-5">
+        <div class="container-fluid">
+
+            <a class="navbar-brand d-flex align-items-center gap-2 mb-0" href="index.html">
+                <span class="brand-mark" aria-hidden="true">G</span>
+                <span class="brand-name fs-4 fw-bold">GREENWICH<span class="brand-period">.</span></span>
+            </a>
+
+            <button class="navbar-toggler" type="button"
+                    aria-label="Open navigation menu"
+                    aria-expanded="false"
+                    aria-controls="site-navigation">
+                <span class="navbar-toggler-icon" aria-hidden="true"></span>
+            </button>
+
+            <nav class="collapse navbar-collapse justify-content-md-end"
+                 id="site-navigation"
+                 aria-label="Main navigation">
+
+                <div class="navbar-nav align-items-md-center gap-md-4">
+                    <a class="nav-link active" href="index.html" aria-current="page">Home</a>
+                    <a class="nav-link" href="faq.html">FAQ</a>
+                    <a class="nav-link" href="track.html">Track</a>
+                    <a class="btn home-report-button ms-md-2" href="report.html">
+                        Report <span aria-hidden="true">↗</span>
+                    </a>
+                </div>
+
+            </nav>
         </div>
-      </nav>
-      </div>
     </header>
 
-    <main>
-      <!-- The hero fills the space below the header and uses a photo selected in scripts/hero.js. -->
-      <section class="hero d-flex align-items-center position-relative overflow-hidden" id="home" aria-labelledby="hero-title">
-        <div class="container position-relative">
-          <div class="row g-5 align-items-center">
-            <div class="col-lg-8 hero-content">
-              <p class="hero-eyebrow d-flex align-items-center gap-2 fw-bold mb-3"><span class="eyebrow-dot" aria-hidden="true"></span> Scam ba 'to?</p>
-              <h1 class="hero-title fw-semibold mb-0" id="hero-title">Your e-trike related concerns<br><span>All in one site.</span></h1>
-              <p class="hero-description lead my-4">Spread community awareness by reporting e-trike concerns here</p>
-              <a class="btn btn-primary d-inline-flex align-items-center gap-4" href="report.html">Report an incident <span aria-hidden="true">↗</span></a>
-              <p class="hero-note small mt-4 mb-0"><span aria-hidden="true">✳</span> Check first. Share smarter.</p>
-            </div>
-            <div class="col-lg-4">
-              <aside class="report-lookup" id="report" aria-labelledby="report-lookup-title">
-                <h2 class="report-lookup-title" id="report-lookup-title">Already submitted a report?</h2>
-                <p class="report-lookup-copy">Enter your report number to check its status.</p>
-                <form id="report-lookup-form">
-                  <label class="form-label" for="report-number">Report number</label>
-                  <input class="form-control mb-3" id="report-number" name="report-number" type="text" placeholder="e.g. SR-2026-001" autocomplete="off" required>
-                  <button class="btn btn-primary w-100" type="submit">Check report status <span aria-hidden="true">→</span></button>
-                  <p class="report-lookup-feedback small mt-3 mb-0" id="report-lookup-feedback" role="status" aria-live="polite" hidden></p>
-                </form>
-              </aside>
-            </div>
-          </div>
-        </div>
-        <p class="photo-credit position-absolute bottom-0 end-0 small m-3">A little concern goes a long way.</p>
-      </section>
+    <!-- Homepage -->
+    <main class="home-main">
 
-      <!-- Static cards introduce common scam categories without needing JavaScript. -->
-      <section class="scam-types py-5" id="scam-types" aria-labelledby="scam-types-title">
-        <div class="container py-lg-4">
-          <div class="scam-types-heading mb-4 mb-lg-5">
-            <p class="scam-types-kicker text-uppercase fw-bold mb-2">A shared community effort</p>
-            <h2 class="scam-types-title mb-3" id="scam-types-title">Who can benefit from community reporting?</h2>
-            <p class="scam-types-intro mb-0">Community feedback can help different groups understand e-trike service experiences and identify areas that may need attention.</p>
-          </div>
+        <!-- Welcome -->
+        <section class="welcome-panel" aria-labelledby="welcome-title">
+            <h1 id="welcome-title">Welcome to GREENWICH!</h1>
+            <p>A community space for reporting and tracking e-trike concerns.</p>
+        </section>
 
-          <div class="row g-3 g-lg-4">
-            <div class="col-md-6 col-lg-4">
-              <article class="scam-card h-100">
-                <span class="scam-icon" aria-hidden="true"><i class="bi bi-envelope-exclamation"></i></span>
-                <h3 class="scam-card-title">E-trike Commuters</h3>
-                <p class="scam-card-description mb-0">Passengers can report concerns, share their experiences, and provide suggestions about the services they use.</p>
-              </article>
-            </div>
-            <div class="col-md-6 col-lg-4">
-              <article class="scam-card h-100">
-                <span class="scam-icon" aria-hidden="true"><i class="bi bi-qr-code"></i></span>
-                <h3 class="scam-card-title">Drivers and Operators</h3>
-                <p class="scam-card-description mb-0">Drivers and operators can gain a better understanding of passenger feedback and recurring service concerns.</p>
-              </article>
-            </div>
-            <div class="col-md-6 col-lg-4">
-              <article class="scam-card h-100">
-                <span class="scam-icon" aria-hidden="true"><i class="bi bi-chat-square-dots"></i></span>
-                <h3 class="scam-card-title">Local Government Units</h3>
-                <p class="scam-card-description mb-0">Local government units may use organized community feedback as an additional reference when reviewing transportation concerns.</p>
-              </article>
-            </div>
-            <div class="col-md-6 col-lg-4">
-              <article class="scam-card h-100">
-                <span class="scam-icon" aria-hidden="true"><i class="bi bi-telephone-inbound"></i></span>
-                <h3 class="scam-card-title">Transport Administrators</h3>
-                <p class="scam-card-description mb-0">Personnel responsible for transportation services can use submitted feedback to identify patterns and areas for improvement.</p>
-              </article>
-            </div>
-          </div>
-        </div>
-      </section>
+        <!-- Recent reports -->
+        <section class="recent-section" aria-labelledby="recent-title">
 
-      <section class="how-it-works py-5" id="how-it-works" aria-labelledby="how-it-works-title">
-        <div class="container py-lg-4">
-          <div class="how-heading mb-5">
-            <p class="how-kicker text-uppercase fw-bold mb-2">From submission to results</p>
-            <h2 class="how-title mb-3" id="how-it-works-title">How it works</h2>
-            <p class="how-intro mb-0">Submit suspicious content, get an AI-assisted analysis, and review the findings.</p>
-          </div>
+            <div class="recent-heading">
+                <h2 id="recent-title">Recent Reports</h2>
+                <a href="track.html">Track a report <span aria-hidden="true">→</span></a>
+            </div>
 
-          <div class="how-steps row g-4 position-relative">
-            <div class="col-md-4">
-              <article class="how-step">
-                <span class="step-number">01</span>
-                <h3 class="step-title">Submit</h3>
-                <p class="step-description mb-0">Complete the report form with the concern, its location, relevant details, and any supporting evidence you can provide.</p>
-              </article>
+            <div class="recent-list" id="recent-reports-list">
+                <div class="empty-reports">
+                    <i class="bi bi-arrow-repeat" aria-hidden="true"></i>
+                    Loading reports...
+                </div>
             </div>
-            <div class="col-md-4">
-              <article class="how-step">
-                <span class="step-number">02</span>
-                <h3 class="step-title">Review</h3>
-                <p class="step-description mb-0">The submitted information can be checked and assessed by the personnel responsible for reviewing community reports.</p>
-              </article>
-            </div>
-            <div class="col-md-4">
-              <article class="how-step">
-                <span class="step-number">03</span>
-                <h3 class="step-title">Track</h3>
-                <p class="step-description mb-0">Use your report number to check the status of your submission and follow any available updates.</p>
-              </article>
-            </div>
-          </div>
-        </div>
-      </section>
 
-      <section class="volunteer-section position-relative d-flex align-items-center overflow-hidden" id="volunteer" aria-labelledby="volunteer-title">
-        <div class="volunteer-parallax" aria-hidden="true"></div>
-        <div class="volunteer-shade" aria-hidden="true"></div>
-        <div class="container volunteer-content">
-          <div class="row">
-            <div class="col-lg-8 col-xl-7">
-              <p class="volunteer-eyebrow text-uppercase fw-bold mb-3">Community feedback</p>
-              <h2 class="volunteer-title mb-3" id="volunteer-title">Every report helps improve transportation.</h2>
-              <p class="volunteer-description mb-4">Community members can share their experiences, raise concerns, and suggest improvements to e-trike services. By collecting these insights, GREENWICH helps make commuter feedback more visible and easier to review.</p>
-              <button class="btn btn-primary d-inline-flex align-items-center gap-3" id="volunteer-button" type="button">FAQ<span aria-hidden="true">↗</span></button>
-              <p class="volunteer-feedback small mt-3 mb-0" id="volunteer-feedback" role="status" aria-live="polite" hidden></p>
-            </div>
-          </div>
-        </div>
-      </section>
+            <div class="home-actions">
+                <a href="report.html" class="btn home-report-button">
+                    <i class="bi bi-plus-circle me-1" aria-hidden="true"></i>
+                    Submit a Report
+                </a>
 
-      
+                <a href="track.html" class="btn home-track-button">
+                    <i class="bi bi-search me-1" aria-hidden="true"></i>
+                    Track a Report
+                </a>
+            </div>
+
+        </section>
+
+        <!-- Report number lookup -->
+        <section class="home-lookup" aria-labelledby="lookup-title">
+
+            <h2 id="lookup-title">Already submitted a report?</h2>
+            <p>Enter your report number to check its status.</p>
+
+            <form id="report-lookup-form">
+                <label class="form-label fw-semibold" for="report-number">Report number</label>
+
+                <input class="form-control mb-3"
+                       id="report-number"
+                       name="report-number"
+                       type="text"
+                       placeholder="e.g. SR-20261025-1001"
+                       autocomplete="off"
+                       required>
+
+                <button class="btn home-report-button w-100" type="submit">
+                    Check report status <span aria-hidden="true">→</span>
+                </button>
+
+                <p class="lookup-feedback small mt-3 mb-0"
+                   id="report-lookup-feedback"
+                   role="status"
+                   aria-live="polite"
+                   hidden></p>
+            </form>
+
+        </section>
+
     </main>
 
+    <!-- Information -->
+    <section class="home-info" id="about">
+        <div class="home-info-inner">
+
+            <h2>Every report helps.</h2>
+
+            <p>
+                GREENWICH provides a space for community members to share concerns
+                regarding e-trike services. Reports can help make experiences,
+                incidents, and suggestions easier to organize and review.
+            </p>
+
+            <a href="faq.html" class="btn home-track-button">
+                Learn more <span aria-hidden="true">→</span>
+            </a>
+
+        </div>
+    </section>
+
+    <!-- Footer -->
     <footer class="site-footer py-4">
-      <div class="container d-flex flex-column flex-sm-row justify-content-between align-items-sm-center gap-2">
-        <p class="footer-copyright mb-0">&copy; 2026 GREENWICH</p>
-        <p class="footer-notice mb-0">This is intended for Web Development (WEBDEVT) demo purposes only.</p>
-      </div>
+        <div class="container d-flex flex-column flex-sm-row justify-content-between align-items-sm-center gap-2">
+            <p class="footer-copyright mb-0">&copy; 2026 GREENWICH</p>
+            <p class="footer-notice mb-0">Web Development demo purposes only.</p>
+        </div>
     </footer>
-  </body>
+
+    <!-- Recent report rendering -->
+    <script>
+        const reportsStorageKey = "suriReports";
+        const recentReportsContainer = document.querySelector("#recent-reports-list");
+
+        const statusLabels = {
+            "pending": "Pending review",
+            "community-review": "Under review",
+            "verdict": "Review completed"
+        };
+
+        const reportIcons = {
+            "pending": "bi-clock",
+            "community-review": "bi-people",
+            "verdict": "bi-check-circle"
+        };
+
+        const escapeHTML = (value) => {
+            return String(value ?? "").replace(/[&<>"']/g, (character) => ({
+                "&": "&amp;",
+                "<": "&lt;",
+                ">": "&gt;",
+                '"': "&quot;",
+                "'": "&#39;"
+            }[character]));
+        };
+
+        const formatDate = (value) => {
+            if (!value) return "Date unavailable";
+
+            const date = new Date(value);
+
+            if (Number.isNaN(date.getTime())) {
+                return "Date unavailable";
+            }
+
+            return date.toLocaleDateString(undefined, {
+                year: "numeric",
+                month: "short",
+                day: "numeric"
+            });
+        };
+
+        const renderReports = (reports) => {
+            recentReportsContainer.innerHTML = "";
+
+            if (reports.length === 0) {
+                recentReportsContainer.innerHTML = `
+              <div class="empty-reports">
+                <i class="bi bi-clipboard" aria-hidden="true"></i>
+                <p class="mb-2 fw-bold">No reports available yet.</p>
+                <p class="mb-0">Be the first to submit a community report.</p>
+              </div>`;
+                return;
+            }
+
+            reports.slice(0, 3).forEach((report) => {
+                const reportNumber = report.reportNumber || "Unknown report";
+                const status = report.status || "pending";
+                const category = report.category || "Community report";
+                const description = report.description || "No description provided.";
+                const date = report.submittedAt || report.receivedDate;
+
+                const card = document.createElement("a");
+                card.className = "recent-report";
+                card.href = `track.html?report=${encodeURIComponent(reportNumber)}`;
+
+                card.innerHTML = `
+              <div class="recent-report-icon">
+                <i class="bi ${reportIcons[status] || "bi-file-earmark"}"
+                  aria-hidden="true"></i>
+              </div>
+
+              <div class="recent-report-content">
+                <h3 class="recent-report-title">${escapeHTML(category)}</h3>
+
+                <p class="recent-report-description">
+                  ${escapeHTML(description)}
+                </p>
+
+                <div class="recent-report-meta">
+                  <span>${escapeHTML(reportNumber)}</span>
+                  <span>${escapeHTML(statusLabels[status] || status)}</span>
+                  <span>${escapeHTML(formatDate(date))}</span>
+                </div>
+              </div>
+
+              <span class="recent-report-arrow" aria-hidden="true">
+                <i class="bi bi-arrow-right"></i>
+              </span>
+            `;
+
+                recentReportsContainer.appendChild(card);
+            });
+        };
+
+        const loadRecentReports = async () => {
+            let savedReports = {};
+            let demoReports = {};
+
+            try {
+                savedReports = JSON.parse(localStorage.getItem(reportsStorageKey) || "{}");
+            } catch {
+                savedReports = {};
+            }
+
+            try {
+                const response = await fetch("data/reports.json");
+
+                if (response.ok) {
+                    demoReports = await response.json();
+                }
+            } catch {
+                demoReports = {};
+            }
+
+            // Saved reports take priority over sample reports.
+            const combinedReports = {
+                ...demoReports,
+                ...savedReports
+            };
+
+            const reports = Object.values(combinedReports);
+
+            reports.sort((a, b) => {
+                const dateA = new Date(a.submittedAt || a.receivedDate || 0);
+                const dateB = new Date(b.submittedAt || b.receivedDate || 0);
+                return dateB - dateA;
+            });
+
+            renderReports(reports);
+        };
+
+        loadRecentReports();
+    </script>
+
+</body>
 </html>
