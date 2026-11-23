@@ -1,7 +1,7 @@
 const reportLookupForm = document.querySelector("#report-lookup-form");
 const reportNumberInput = document.querySelector("#report-number");
 const reportLookupFeedback = document.querySelector("#report-lookup-feedback");
-const reportsStorageKey = "suriReports";
+const reportsStorageKey = "GREENWICH";
 
 // Only reports saved in this browser can be looked up in this frontend demo.
 reportLookupForm.addEventListener("submit", (event) => {
