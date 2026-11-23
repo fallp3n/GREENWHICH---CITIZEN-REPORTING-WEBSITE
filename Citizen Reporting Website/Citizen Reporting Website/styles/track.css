@@ -104,10 +104,6 @@
   overflow-wrap: anywhere;
 }
 
-.track-message {
-  white-space: pre-wrap;
-}
-
 .track-progress {
   padding-top: 1.5rem;
   border-top: 1px solid #e7eae3;
@@ -118,76 +114,113 @@
   font-size: 1.4rem;
 }
 
+
 .track-timeline {
-  position: relative;
-  display: grid;
-  grid-template-columns: repeat(4, minmax(0, 1fr));
-  gap: 1rem;
-  margin: 0;
+  display: flex;
+  flex-direction: column;
+  margin: 0 0 2rem;
   padding: 0;
   list-style: none;
 }
 
 .track-timeline::before {
-  position: absolute;
-  top: 19px;
-  right: 12.5%;
-  left: 12.5%;
-  height: 2px;
-  background: #dfe6d2;
-  content: "";
+  content: none;
 }
 
 .track-step {
   position: relative;
   z-index: 1;
-  text-align: center;
+  display: grid;
+  grid-template-columns: 44px minmax(0, 1fr);
+  gap: 1rem;
+  padding-bottom: 2rem;
+  text-align: left;
+}
+
+.track-step:last-child {
+  padding-bottom: 0;
+}
+
+.track-step:not(:last-child)::before {
+  position: absolute;
+  top: 48px;
+  bottom: 6px;
+  left: 21px;
+  width: 2px;
+  background: #d5dbcf;
+  content: "";
+}
+
+.track-step:not(:last-child)::after {
+  position: absolute;
+  bottom: 2px;
+  left: 16px;
+  border-top: 8px solid #d5dbcf;
+  border-right: 6px solid transparent;
+  border-left: 6px solid transparent;
+  content: "";
+}
+
+.track-step.is-complete:not(:last-child)::before {
+  background: #314128;
+}
+
+.track-step.is-complete:not(:last-child)::after {
+  border-top-color: #314128;
 }
 
 .track-step-marker {
   display: grid;
-  width: 40px;
-  height: 40px;
-  margin: 0 auto 0.9rem;
+  width: 44px;
+  height: 44px;
+  margin: 0;
   place-items: center;
   border: 2px solid #d5dbcf;
   border-radius: 50%;
   background: #fff;
-  color: #59635e;
-  font-size: 0.85rem;
-  font-weight: 700;
+  font-size: 1.2rem;
+  line-height: 1;
 }
 
 .track-step.is-complete .track-step-marker {
   border-color: #314128;
   background: var(--green);
-  color: var(--ink);
 }
 
 .track-step.is-current .track-step-marker {
   border-color: #182722;
-  background: #182722;
-  color: #fff;
+  background: #fff;
   box-shadow: 0 0 0 4px #e6edda;
 }
 
+.track-step-content {
+  padding-top: 0.15rem;
+}
+
 .track-step-title {
-  margin-bottom: 0.4rem;
+  margin-bottom: 0.25rem;
   color: var(--ink);
   font-family: var(--display-font);
   font-size: 1rem;
 }
 
+.track-step.is-current .track-step-title {
+  font-weight: 700;
+}
+
 .track-step-copy {
-  margin: 0 auto;
+  margin: 0;
   color: #59635e;
   font-size: 0.85rem;
   line-height: 1.55;
 }
 
+.track-step.is-upcoming .track-step-marker,
+.track-step.is-upcoming .track-step-title,
 .track-step.is-upcoming .track-step-copy {
-  color: #737b75;
+  opacity: 0.5;
 }
+
 
 .track-verdict {
   padding: 1.5rem;
@@ -207,35 +240,5 @@
 @media (max-width: 767.98px) {
   .track-report-header {
     flex-direction: column;
-  }
-
-  .track-timeline {
-    display: block;
-    padding-left: 0;
-  }
-
-  .track-timeline::before {
-    top: 20px;
-    right: auto;
-    bottom: 20px;
-    left: 19px;
-    width: 2px;
-    height: auto;
-  }
-
-  .track-step {
-    display: grid;
-    grid-template-columns: 40px minmax(0, 1fr);
-    gap: 1rem;
-    min-height: 104px;
-    text-align: left;
-  }
-
-  .track-step-marker {
-    margin: 0;
-  }
-
-  .track-step-copy {
-    margin: 0;
   }
 }

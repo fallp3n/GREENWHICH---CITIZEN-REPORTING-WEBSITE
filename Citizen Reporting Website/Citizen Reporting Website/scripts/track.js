@@ -1,4 +1,4 @@
-const reportsStorageKey = "suriReports";
+const reportsStorageKey = "GREENWICH";
 const trackSearchForm = document.querySelector("#track-search-form");
 const trackNumberInput = document.querySelector("#track-report-number");
 const trackNotice = document.querySelector("#track-notice");
@@ -19,14 +19,16 @@ const demoReportsRequest = fetch("data/reports.json")
   .catch(() => ({}));
 
 const timelineSteps = [
-  { title: "Submitted", copy: "Your report has been successfully submitted." },
-  { title: "Under Review", copy: "Your report is being reviewed by the administrator." },
-  { title: "In Progress", copy: "The reported concern is currently being addressed." },
-  { title: "Assigned", copy: "Your report has been assigned to the appropriate personnel." },
-  { title: "Resolved", copy: "The reported concern has been addressed." },
-  { title: "Case Closed", copy: "Your report has been finalized and closed." }
+  { icon: "📤", title: "Submitted", copy: "Your report has been successfully submitted." },
+  { icon: "📋", title: "Under Review", copy: "Your report is being reviewed by the administrator." },
+  { icon: "🔄", title: "In Progress", copy: "The reported concern is currently being addressed." },
+  { icon: "🪪", title: "Assigned", copy: "Your report has been assigned to the appropriate personnel." },
+  { icon: "✅", title: "Resolved", copy: "The reported concern has been addressed." },
+  { icon: "💼", title: "Case Closed", copy: "Your report has been finalized and closed." }
 ];
 
+// Must stay in the same order as timelineSteps.
+const statusOrder = ["submitted", "under_review", "in_progress", "assigned", "resolved", "case_closed"];
 
 // Read saved report data from this browser and parse its JSON text into an object.
 const readReports = () => JSON.parse(localStorage.getItem(reportsStorageKey) || "{}");
@@ -48,17 +50,23 @@ const formatDate = (value) => {
 };
 
 const setValue = (selector, value) => {
+  const element = document.querySelector(selector);
+
+  // If the HTML doesn't have this element yet, skip it instead of crashing the page.
+  if (!element) {
+    console.warn(`Missing element in HTML: ${selector}`);
+    return;
+  }
+
   // `textContent` displays text without treating it as HTML markup.
-  document.querySelector(selector).textContent = value || "Not provided";
+  element.textContent = value || "Not provided";
 };
 
 // Build the progress list by creating HTML elements and adding them to the page.
 const buildTimeline = (report) => {
-  const currentStep = report.status === "verdict"
-    ? 3
-    : report.status === "community-review"
-      ? 2
-      : 1;
+  const statusIndex = Math.max(0, statusOrder.indexOf(report.status));
+  // A closed case has no "current" step since everything is complete.
+  const currentStep = report.status === "case_closed" ? timelineSteps.length : statusIndex;
 
   trackTimeline.replaceChildren();
 
@@ -73,7 +81,7 @@ const buildTimeline = (report) => {
     item.className = `track-step is-${state}`;
     marker.className = "track-step-marker";
     marker.setAttribute("aria-hidden", "true");
-    marker.textContent = state === "complete" ? "✓" : String(index + 1).padStart(2, "0");
+    marker.textContent = step.icon;
     content.className = "track-step-content";
     title.className = "track-step-title";
     title.textContent = step.title;
@@ -95,46 +103,33 @@ const displayReport = (report, isExample = false) => {
   trackReport.hidden = false;
   trackNumberInput.value = report.reportNumber;
 
-setValue("#track-category", report.category);
-setValue("#track-report-heading", report.reportNumber);
-setValue("#track-report-title", report.title || report.reportTitle);
-setValue("#track-description", report.description);
-setValue("#track-date-submitted", formatDate(report.submittedAt));
-setValue("#track-location", report.location);
-setValue("#track-submitted", formatDate(report.submittedAt));
+  setValue("#track-category", report.category);
+  setValue("#track-report-heading", report.reportNumber);
+  setValue("#track-report-title", report.title || report.reportTitle);
+  setValue("#track-description", report.description);
+  setValue("#track-date-submitted", formatDate(report.submittedAt));
+  setValue("#track-location", report.location);
+  setValue("#track-updated", formatDate(report.updatedAt));
+  setValue("#track-trike-number", report.trikeNumber);
 
-  const statusLabel = report.status === "verdict"
-    ? "Verdict published"
-    : report.status === "community-review"
-      ? "Community review"
-      : "Pending review";
-
-  trackStatus.textContent = statusLabel;
-  // `toggle` adds or removes this CSS class depending on whether a verdict is published.
-  trackStatus.classList.toggle("is-verdict", report.status === "verdict");
-
-  const messageRow = document.querySelector("#track-message-row");
-  messageRow.hidden = !report.suspiciousText;
-  if (report.suspiciousText) {
-    setValue("#track-message", report.suspiciousText);
-  }
-
-  const screenshotRow = document.querySelector("#track-screenshot-row");
-  screenshotRow.hidden = !report.screenshotName;
-  if (report.screenshotName) {
-    setValue("#track-screenshot", `${report.screenshotName} (image file is not retained in this demo)`);
-  }
+  // Status badge in the top right of the card.
+  const statusIndex = Math.max(0, statusOrder.indexOf(report.status));
+  trackStatus.textContent = timelineSteps[statusIndex].title;
+  // `toggle` adds or removes this CSS class once the case is resolved or closed.
+  trackStatus.classList.toggle("is-verdict", ["resolved", "case_closed"].includes(report.status));
 
   buildTimeline(report);
-  trackVerdict.hidden = report.status !== "verdict";
 
-  if (report.status === "verdict") {
-    setValue("#track-verdict-title", report.verdict || "Verdict published");
-    setValue("#track-verdict-copy", report.verdictDetails || "This verdict was added to this report after review.");
+  // The resolution box only shows when the report has a resolution message.
+  const hasResolution = Boolean(report.resolution);
+  trackVerdict.hidden = !hasResolution;
+  if (hasResolution) {
+    setValue("#track-verdict-title", "Resolution");
+    setValue("#track-verdict-copy", report.resolution);
   }
 
   if (isExample) {
-    trackNotice.textContent = "Sample report shown for demonstration. This is not a real report or assessment.";
+    trackNotice.textContent = "Sample report shown for demonstration. This is not a real report.";
     trackNotice.hidden = false;
   }
 };
@@ -159,7 +154,9 @@ const loadReport = async (reportNumber) => {
     }
 
     displayReport(report, Boolean(report.isDemo));
-  } catch {
+  } catch (error) {
+    // Logging the real error makes problems much easier to find in the browser console.
+    console.error(error);
     trackNotice.textContent = "Reports could not be loaded. Check this browser's local storage and try again.";
     trackNotice.hidden = false;
   }
@@ -176,10 +173,10 @@ trackSearchForm.addEventListener("submit", (event) => {
   loadReport(reportNumber);
 });
 
-// Read query parameters from the page URL, such as ?report=SR-... or ?demo=verdict.
+// Read query parameters from the page URL, such as ?report=SR-... or ?demo=resolved.
 const parameters = new URLSearchParams(window.location.search);
 const requestedReport = parameters.get("report") || (
-  parameters.get("demo") === "verdict" ? "SR-20261025-1003" : ""
+  parameters.get("demo") === "resolved" ? "SR-20261025-1003" : ""
 );
 
 if (requestedReport) {
