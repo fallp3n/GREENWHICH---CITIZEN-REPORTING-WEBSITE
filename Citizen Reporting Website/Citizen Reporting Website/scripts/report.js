@@ -222,6 +222,19 @@ const isValidPhoneNumber = (value) => {
     return /^\d{7,15}$/.test(cleanedNumber);
 };
 
+// =========================================
+// FULL NAME VALIDATION
+// =========================================
+
+const isValidFullName = (value) => {
+    const trimmed = value.trim();
+    if (trimmed.length < 2) return false;
+    if (!/\s/.test(trimmed)) return false;
+    if (/[^a-zA-ZÀ-ÿ\s\-\']/.test(trimmed)) return false;
+    if (trimmed.length > 100) return false;
+    return true;
+};
+
 
 // =========================================
 // FORM SUBMISSION
@@ -256,6 +269,15 @@ reportForm.addEventListener("submit", (event) => {
             : "Enter a valid phone number containing 7 to 15 digits."
     );
 
+    // ---------------------------------------
+    // Validate full name
+    // ---------------------------------------
+
+    senderInput.setCustomValidity(
+        isValidFullName(senderInput.value)
+            ? ""
+            : "Enter your full name (first and last name, letters only)."
+    );
 
     // ---------------------------------------
     // Validate file upload
@@ -329,6 +351,9 @@ reportForm.addEventListener("submit", (event) => {
 
         description:
             document.querySelector("#incident-description").value.trim(),
+
+        trikeNumber:
+            document.querySelector("#trike-number").value.trim(),
 
         // Incident date and time
         receivedDate: receivedDateInput.value,

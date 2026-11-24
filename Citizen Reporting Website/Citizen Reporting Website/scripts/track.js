@@ -140,7 +140,7 @@ const loadReport = async (reportNumber) => {
     const report = savedReports[normalizedNumber] || demoReports[normalizedNumber];
 
     if (!report) {
-      trackNotice.textContent = "No report with that number was found. Check the number and try again.";
+      trackNotice.textContent = "No report with that number was found. Please check the number and try again.";
       trackNotice.hidden = false;
       return;
     }
