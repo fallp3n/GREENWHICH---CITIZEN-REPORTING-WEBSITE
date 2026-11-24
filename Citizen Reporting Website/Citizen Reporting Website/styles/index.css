@@ -19,3 +19,67 @@ html {
     scroll-behavior: auto;
   }
 }
+
+
+/* MOBILE BOTTOM NAVIGATION */
+@media (max-width: 767.98px) {
+
+  /* Bottom navigation bar */
+  body {
+    padding-bottom: 85px;
+  }
+
+  header.navbar {
+    position: fixed !important;
+    top: auto !important;
+    bottom: 0 !important;
+    left: 0;
+    width: 100%;
+    min-height: auto !important;
+    padding: 0 !important;
+    background: #f7f7f2 !important;
+    border-top: 1px solid #e5e7df;
+    border-bottom: none !important;
+    z-index: 1050;
+  }
+
+  /* Hide logo and hamburger */
+  header.navbar .navbar-brand,
+  header.navbar .navbar-toggler {
+    display: none !important;
+  }
+
+  /* Navbar container */
+  header.navbar .container-fluid {
+    padding: 0;
+  }
+
+  /* Keep navigation visible */
+  #site-navigation {
+    display: block !important;
+    visibility: visible !important;
+    width: 100%;
+    height: auto !important;
+  }
+
+  /* Horizontal navigation links */
+  .navbar-nav {
+    display: flex !important;
+    flex-direction: row !important;
+    justify-content: space-around;
+    align-items: center;
+    width: 100%;
+    padding: 10px 2px;
+    gap: 0 !important;
+  }
+
+  .navbar-nav .nav-link,
+  .navbar-nav .home-report-button {
+    flex: 1;
+    margin: 0 !important;
+    padding: 10px 2px;
+    text-align: center;
+    font-size: 0.8rem;
+    white-space: nowrap;
+  }
+}
