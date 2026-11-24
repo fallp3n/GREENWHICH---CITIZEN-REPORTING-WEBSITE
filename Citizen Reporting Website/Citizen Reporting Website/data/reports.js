@@ -47,7 +47,7 @@ window.demoReportsData = {
     coords: [14.5800, 121.1700],
     submittedAt: "2026-10-19T02:10:00.000Z",
     updatedAt: "2026-10-24T03:00:00.000Z",
-    resolution: "Demo only. Driver was warned and reminded of passenger rights; the operator was notified."
+    resolution: "Driver was warned and reminded of passenger rights; the operator was notified."
   },
   "SR-20261025-1004": {
     reportNumber: "SR-20261025-1004",
@@ -63,6 +63,6 @@ window.demoReportsData = {
     coords: [14.6000, 121.1900],
     submittedAt: "2026-10-11T04:45:00.000Z",
     updatedAt: "2026-10-20T08:00:00.000Z",
-    resolution: "Demo only. Operator repaired the vehicle and passed re-inspection."
+    resolution: "Operator repaired the vehicle and passed re-inspection."
   }
 };

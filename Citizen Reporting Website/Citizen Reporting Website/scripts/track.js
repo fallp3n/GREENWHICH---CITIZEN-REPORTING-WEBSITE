@@ -22,6 +22,12 @@ const timelineSteps = [
 // Must stay in the same order as timelineSteps.
 const statusOrder = ["submitted", "under_review", "in_progress", "assigned", "resolved", "case_closed"];
 
+// Turn a saved status like "in_progress" into the label shown on the page ("In Progress").
+const formatStatus = (status) => {
+  const index = statusOrder.indexOf(status);
+  return index === -1 ? "Submitted" : timelineSteps[index].title;
+};
+
 // Read saved report data from this browser and parse its JSON text into an object.
 const readReports = () => JSON.parse(localStorage.getItem(reportsStorageKey) || "{}");
 
@@ -105,8 +111,7 @@ const displayReport = (report, isExample = false) => {
   setValue("#track-trike-number", report.trikeNumber);
 
   // Status badge in the top right of the card.
-  const statusIndex = Math.max(0, statusOrder.indexOf(report.status));
-  trackStatus.textContent = timelineSteps[statusIndex].title;
+  trackStatus.textContent = formatStatus(report.status);
   // `toggle` adds or removes this CSS class once the case is resolved or closed.
   trackStatus.classList.toggle("is-verdict", ["resolved", "case_closed"].includes(report.status));
 
@@ -153,6 +158,68 @@ const loadReport = async (reportNumber) => {
     trackNotice.hidden = false;
   }
 };
+
+
+// Display the passenger's recently submitted reports.
+const loadRecentReports = () => {
+  const recentReportsContainer = document.querySelector("#recent-reports-list");
+
+  let savedReports = {};
+
+  try {
+    savedReports = readReports();
+  } catch (error) {
+    console.error("Could not load recent reports:", error);
+  }
+
+  // Get the saved reports and sort them from newest to oldest.
+  const reports = Object.values(savedReports);
+
+  reports.sort((a, b) => {
+    return new Date(b.submittedAt || b.receivedDate || 0) -
+           new Date(a.submittedAt || a.receivedDate || 0);
+  });
+
+  recentReportsContainer.replaceChildren();
+
+  // Show a message if there are no saved reports.
+  if (reports.length === 0) {
+    recentReportsContainer.innerHTML = `
+      <p class="recent-reports-empty">
+        You haven't submitted any reports yet.
+      </p>
+    `;
+    return;
+  }
+
+ 
+  reports.slice(0, 3).forEach((report) => {
+    const card = document.createElement("a");
+    const details = document.createElement("div");
+    const category = document.createElement("h3");
+    const reportNumber = document.createElement("p");
+    const status = document.createElement("span");
+    const date = document.createElement("small");
+    const arrow = document.createElement("span");
+
+    card.className = "recent-report-card";
+    card.href = `track.html?report=${encodeURIComponent(report.reportNumber)}`;
+
+    category.textContent = report.title || report.category || "Community Report";
+    reportNumber.textContent = report.reportNumber || "Unknown report";
+    status.textContent = `Status: ${formatStatus(report.status)}`;
+    date.textContent = formatDate(report.submittedAt || report.receivedDate);
+    arrow.textContent = "View progress →";
+
+    details.append(category, reportNumber, status, date);
+    card.append(details, arrow);
+
+    recentReportsContainer.appendChild(card);
+  });
+};
+
+// Load recent reports when the Track page opens.
+loadRecentReports();
 
 trackSearchForm.addEventListener("submit", (event) => {
   // Handle the search ourselves instead of letting the browser reload the page.

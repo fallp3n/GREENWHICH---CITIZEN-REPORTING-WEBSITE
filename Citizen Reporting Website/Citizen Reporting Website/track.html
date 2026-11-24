@@ -20,11 +20,8 @@
     <link rel="stylesheet" href="styles/footer.css">
 
     <script src="scripts/menu.js" defer></script>
-
-   
     <script src="data/reports.js" defer></script>
     <script src="scripts/track.js" defer></script>
-
 
     <style>
         body {
@@ -57,11 +54,11 @@
             font-weight: 700;
         }
 
-            .home-report-button:hover {
-                background: #d8ff75;
-                border-color: #d8ff75;
-                color: #182722;
-            }
+        .home-report-button:hover {
+            background: #d8ff75;
+            border-color: #d8ff75;
+            color: #182722;
+        }
 
         .site-footer {
             background: #f7f7f2;
@@ -105,86 +102,181 @@
     </header>
 
     <main>
-      <section class="track-hero d-flex align-items-center" aria-labelledby="track-title">
-        <div class="container">
-          <p class="track-eyebrow text-uppercase fw-bold mb-2">Report status</p>
-          <h1 class="track-hero-title mb-2" id="track-title">Track a report</h1>
-          <p class="track-hero-copy mb-0">Follow your submitted report.</p>
-        </div>
-      </section>
 
-      <section class="track-main py-5" aria-label="Report tracking details">
-        <div class="container">
-          <div class="row g-4">
-          <form class="track-search mb-4" id="track-search-form">
-            <label class="form-label" for="track-report-number">Report number</label>
-            <div class="input-group">
-              <input class="form-control" id="track-report-number" name="report-number" type="text" placeholder="e.g. SR-20261025-ABCDE" required>
-              <button class="btn btn-dark" type="submit">Find report</button>
+        <!-- Track Hero -->
+        <section class="track-hero d-flex align-items-center" aria-labelledby="track-title">
+            <div class="container">
+                <p class="track-eyebrow text-uppercase fw-bold mb-2">Report status</p>
+                <h1 class="track-hero-title mb-2" id="track-title">Track a report</h1>
+                <p class="track-hero-copy mb-0">Follow your submitted report.</p>
             </div>
-            <p class="form-text mb-0">Try sample cases: SR-20261025-1001 (submitted), SR-20261025-1002 (in progress), SR-20261025-1003 (resolved), or SR-20261025-1004 (case closed).</p>
-          </form>
+        </section>
 
-          <p class="track-notice" id="track-notice" role="status" aria-live="polite" hidden></p>
+        <!-- Track Main Content -->
+        <section class="track-main py-5" aria-label="Report tracking details">
+            <div class="container">
+                <div class="row g-4 align-items-start">
 
-          <article class="track-report" id="track-report" aria-labelledby="track-report-heading" hidden>
-            <header class="track-report-header">
-              <div>
-                <p class="track-category mb-1" id="track-category"></p>
-                <h2 class="track-report-number mb-0" id="track-report-heading"></h2>
-              </div>
-              <span class="track-status" id="track-status"></span>
-            </header>
+                    <!-- Left column: search, notice, and the report details -->
+                    <div class="col-lg-8">
 
-            <div class="row g-4 py-4">
-              <div class="col-12">
-                <h3 class="track-detail-title">Report Title</h3>
-                <p class="track-detail-value mb-0" id="track-report-title"></p>
-              </div>
-              <div class="col-md-6">
-                <h3 class="track-detail-title">Description</h3>
-                <p class="track-detail-value mb-0" id="track-description"></p>
-              </div>
-              <div class="col-md-6">
-                <h3 class="track-detail-title">Date submitted</h3>
-                <p class="track-detail-value mb-0" id="track-date-submitted"></p>
-              </div>
-              <div class="col-md-6">
-                <h3 class="track-detail-title">Location</h3>
-                <p class="track-detail-value mb-0" id="track-location"></p>
-              </div>
-              <div class="col-md-6">
-                <h3 class="track-detail-title">Last updated</h3>
-                <p class="track-detail-value mb-0" id="track-updated"></p>
-              </div>
-              <div class="col-md-6">
-                <h3 class="track-detail-title">Trike number</h3>
-                <p class="track-detail-value mb-0" id="track-trike-number"></p>
-              </div>
+                        <form class="track-search mb-3" id="track-search-form">
+
+                            <label class="form-label" for="track-report-number">
+                                Report number
+                            </label>
+
+                            <div class="input-group">
+                                <input
+                                    class="form-control"
+                                    id="track-report-number"
+                                    name="report-number"
+                                    type="text"
+                                    placeholder="e.g. SR-20261025-ABCDE"
+                                    required
+                                >
+
+                                <button class="btn btn-dark" type="submit">
+                                    Find report
+                                </button>
+                            </div>
+
+                            <p class="form-text mb-0">
+                                Try sample cases: SR-20261025-1001 (Submitted),
+                                SR-20261025-1002 (In Progress),
+                                SR-20261025-1003 (Resolved), or
+                                SR-20261025-1004 (Case Closed).
+                            </p>
+
+                        </form>
+
+                        <!-- Track Notice -->
+                        <p
+                            class="track-notice"
+                            id="track-notice"
+                            role="status"
+                            aria-live="polite"
+                            hidden>
+                        </p>
+
+                        <!-- Report Details (now directly under the search box) -->
+                        <article
+                            class="track-report"
+                            id="track-report"
+                            aria-labelledby="track-report-title"
+                            hidden>
+
+                            <header class="track-report-header">
+
+                                <div>
+                                    <p class="track-category mb-1" id="track-category"></p>
+                                    <h2 class="track-report-title mb-1" id="track-report-title"></h2>
+                                    <p class="track-report-number mb-0" id="track-report-heading"></p>
+                                </div>
+
+                                <span class="track-status" id="track-status"></span>
+
+                            </header>
+
+                            <!-- Report Information -->
+                            <div class="row g-4 py-4">
+
+                                <div class="col-md-6">
+                                    <h3 class="track-detail-title">Description</h3>
+                                    <p class="track-detail-value mb-0" id="track-description"></p>
+                                </div>
+
+                                <div class="col-md-6">
+                                    <h3 class="track-detail-title">Date submitted</h3>
+                                    <p class="track-detail-value mb-0" id="track-date-submitted"></p>
+                                </div>
+
+                                <div class="col-md-6">
+                                    <h3 class="track-detail-title">Location</h3>
+                                    <p class="track-detail-value mb-0" id="track-location"></p>
+                                </div>
+
+                                <div class="col-md-6">
+                                    <h3 class="track-detail-title">Last updated</h3>
+                                    <p class="track-detail-value mb-0" id="track-updated"></p>
+                                </div>
+
+                                <div class="col-md-6">
+                                    <h3 class="track-detail-title">Trike number</h3>
+                                    <p class="track-detail-value mb-0" id="track-trike-number"></p>
+                                </div>
+
+                            </div>
+
+                            <!-- Progress Timeline -->
+                            <section class="track-progress" aria-labelledby="track-progress-title">
+
+                                <h3 class="track-progress-title" id="track-progress-title">
+                                    Progress
+                                </h3>
+
+                                <ol class="track-timeline" id="track-timeline"></ol>
+
+                            </section>
+
+                            <!-- Report Outcome -->
+                            <section
+                                class="track-verdict mt-4"
+                                id="track-verdict"
+                                aria-labelledby="track-verdict-title"
+                                hidden>
+
+                                <p class="track-verdict-kicker text-uppercase fw-bold mb-2">
+                                    Outcome
+                                </p>
+
+                                <h3 class="track-verdict-title mb-2" id="track-verdict-title"></h3>
+
+                                <p class="track-verdict-copy mb-0" id="track-verdict-copy"></p>
+
+                            </section>
+
+                        </article>
+
+                    </div>
+
+                    <!-- Right column: recent reports -->
+                    <div class="col-lg-4">
+                        <section class="recent-reports-section" aria-labelledby="recent-reports-title">
+
+                            <h2 id="recent-reports-title">My Recent Reports</h2>
+                            <p>View your recently submitted reports.</p>
+
+                            <div id="recent-reports-list">
+                                <p>Loading reports...</p>
+                            </div>
+
+                        </section>
+                    </div>
+
+                    <!-- Demo Note -->
+                    <div class="col-12">
+                        <p class="track-demo-note small mt-4 mb-0">
+                            Sample cases load from data/reports.js. Submitted reports are stored only in this browser and are not sent to any agency.
+                        </p>
+                    </div>
+
+                </div>
             </div>
+        </section>
 
-            <section class="track-progress" aria-labelledby="track-progress-title">
-              <h3 class="track-progress-title" id="track-progress-title">Progress</h3>
-              <ol class="track-timeline" id="track-timeline"></ol>
-            </section>
-
-            <section class="track-verdict mt-4" id="track-verdict" aria-labelledby="track-verdict-title" hidden>
-              <p class="track-verdict-kicker text-uppercase fw-bold mb-2">Outcome</p>
-              <h3 class="track-verdict-title mb-2" id="track-verdict-title"></h3>
-              <p class="track-verdict-copy mb-0" id="track-verdict-copy"></p>
-            </section>
-          </article>
-
-          <p class="track-demo-note small mt-4 mb-0">Sample cases load from data/reports.js. Submitted reports are stored only in this browser and are not sent to any agency.</p>
-        </div>
-      </section>
     </main>
 
     <!-- Footer -->
     <footer class="site-footer py-4">
         <div class="container d-flex flex-column flex-sm-row justify-content-between align-items-sm-center gap-2">
+
             <p class="footer-copyright mb-0">&copy; 2026 GREENWICH</p>
-            <p class="footer-notice mb-0">Web Development demo purposes only.</p>
+
+            <p class="footer-notice mb-0">
+                Web Development demo purposes only.
+            </p>
+
         </div>
     </footer>
 
