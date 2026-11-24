@@ -1,9 +1,11 @@
 const reportLookupForm = document.querySelector("#report-lookup-form");
 const reportNumberInput = document.querySelector("#report-number");
 const reportLookupFeedback = document.querySelector("#report-lookup-feedback");
-const reportsStorageKey = "GREENWICH";
+// Named differently from the inline script in index.html, which also defines a storage key.
+// Two scripts on one page can't declare the same `const` name.
+const lookupStorageKey = "GREENWICH";
 
-// Only reports saved in this browser can be looked up in this frontend demo.
+// Reports saved in this browser and the sample reports from data/reports.js can be looked up.
 reportLookupForm.addEventListener("submit", (event) => {
   // Stop the browser's normal form submission, which would reload or navigate away.
   event.preventDefault();
@@ -22,11 +24,14 @@ reportLookupForm.addEventListener("submit", (event) => {
   try {
     // JSON is a text format for storing data. `JSON.parse` turns that text into
     // JavaScript values, such as the object of saved reports used below.
-    const savedReports = JSON.parse(localStorage.getItem(reportsStorageKey) || "{}");
+    const savedReports = JSON.parse(localStorage.getItem(lookupStorageKey) || "{}");
+    
+    // Sample reports are loaded by a <script> tag (data/reports.js) so it works without a server.
+    const sampleReports = window.demoReportsData || {};
     const reportNumber = reportNumberInput.value.trim().toUpperCase();
 
-    if (!savedReports[reportNumber]) {
-      reportLookupFeedback.textContent = "No report with that number was found in this browser.";
+    if (!savedReports[reportNumber] && !sampleReports[reportNumber]) {
+      reportLookupFeedback.textContent = "No report with that number was found. Check the number and try again.";
       reportLookupFeedback.hidden = false;
       return;
     }
