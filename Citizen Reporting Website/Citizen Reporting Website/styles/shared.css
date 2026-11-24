@@ -1,0 +1,133 @@
+
+/* GREENWICH - Shared UI */
+
+:root {
+	--bg-color: #f7f7f2;
+	--text-color: #182722;
+	--accent-color: #c9f15d;
+	--panel-color: #e4e7e1;
+	--card-color: #ffffff;
+	--border-color: #dce1d9;
+	--muted-color: #59635e;
+	--display-font: "Space Grotesk", sans-serif;
+	--body-font: "DM Sans", sans-serif;
+}
+
+body {
+	background: var(--bg-color);
+	color: var(--text-color);
+	font-family: var(--body-font);
+	margin: 0;
+}
+
+/* Navigation */
+
+.navbar {
+	background: var(--bg-color);
+	border-bottom: 1px solid #e5e7df;
+}
+
+.brand-mark {
+	background: var(--accent-color);
+	color: var(--text-color);
+}
+
+.brand-period {
+	color: #ff7059;
+}
+
+.navbar-nav .nav-link {
+	color: var(--text-color);
+	font-weight: 600;
+}
+
+	.navbar-nav .nav-link:hover {
+		color: var(--muted-color);
+	}
+
+	.navbar-nav .nav-link.active {
+		color: var(--text-color);
+	}
+
+/* Primary button */
+
+.home-report-button {
+	background: var(--accent-color);
+	border: 1px solid var(--accent-color);
+	color: var(--text-color);
+	font-weight: 700;
+}
+
+	.home-report-button:hover {
+		background: #d8ff75;
+		border-color: #d8ff75;
+		color: var(--text-color);
+	}
+
+/* Secondary button */
+
+.home-track-button {
+	border: 1px solid var(--text-color);
+	color: var(--text-color);
+	background: transparent;
+}
+
+	.home-track-button:hover {
+		background: var(--text-color);
+		color: white;
+	}
+
+/* Shared panels and cards */
+
+.shared-panel {
+	background: var(--panel-color);
+	border-radius: 12px;
+}
+
+.shared-card {
+	background: var(--card-color);
+	border: 1px solid var(--border-color);
+	border-radius: 10px;
+}
+
+/* Form elements */
+
+.form-control,
+.form-select {
+	color: var(--text-color);
+	border: 1px solid var(--border-color);
+	border-radius: 8px;
+}
+
+	.form-control:focus,
+	.form-select:focus {
+		border-color: #a8bc8a;
+		box-shadow: 0 0 0 0.2rem rgba(201, 241, 93, 0.25);
+	}
+
+/* Shared footer */
+
+.site-footer {
+	background: var(--bg-color);
+	color: var(--text-color);
+}
+
+/* Typography */
+
+h1, h2, h3, h4, h5, h6 {
+	font-family: var(--display-font);
+	color: var(--text-color);
+}
+
+p {
+	color: var(--muted-color);
+}
+
+/* Mobile */
+
+@media (max-width: 767.98px) {
+	.navbar {
+		padding-left: 16px;
+		padding-right: 16px;
+	}
+}
