@@ -110,3 +110,46 @@ function logout() {
 function getCurrentUser() {
     return JSON.parse(localStorage.getItem(CURRENT_USER_KEY));
 }
+
+
+// Homepage account navigation
+const accountControls = document.querySelector("#account-controls");
+
+if (accountControls) {
+    const currentUser = getCurrentUser();
+
+    if (currentUser) {
+        accountControls.innerHTML = `
+            <span class="nav-link fw-semibold">
+                <i class="bi bi-person-circle me-1"></i>
+                ${currentUser.name}
+            </span>
+
+            <button class="btn home-track-button" id="logout-button" type="button">
+                Log Out
+            </button>
+        `;
+
+        document.querySelector("#logout-button").addEventListener("click", logout);
+
+    } else {
+        accountControls.innerHTML = `
+            <a href="login.html" class="btn home-track-button">Log In</a>
+            <a href="register.html" class="btn home-report-button">Register</a>
+        `;
+    }
+}
+
+
+function requireLogin() {
+    const currentUser = getCurrentUser();
+
+    if (!currentUser) {
+        window.location.href = "login.html";
+        return false;
+    }
+
+    return true;
+}
+
+

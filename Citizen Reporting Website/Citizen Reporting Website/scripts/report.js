@@ -360,6 +360,7 @@ reportForm.addEventListener("submit", (event) => {
         observedTime: timeInput.value,
 
         // User information
+        userId: getCurrentUser().id,
         sender: senderInput.value.trim(),
         phone: phoneInput.value.trim(),
         email: emailInput.value.trim(),

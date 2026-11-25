@@ -27,6 +27,7 @@
     <!-- JavaScript -->
     <script src="scripts/menu.js" defer></script>
     <script src="scripts/report.js" defer></script>
+    <script src="scripts/auth.js" defer></script>
 </head>
 
 <body>
@@ -206,10 +207,10 @@
                     </label>
 
                     <input class="form-control"
-                        type="text"
-                        id="trike-number"
-                        name="trike-number"
-                        placeholder="e.g. T-1234 or plate number if known">
+                           type="text"
+                           id="trike-number"
+                           name="trike-number"
+                           placeholder="e.g. T-1234 or plate number if known">
 
                     <div class="form-text">
                         If you can identify the trike, enter its number or plate here.
@@ -462,7 +463,7 @@
                             </div>
 
                             <div class="form-text">
-                                Minimum 8 characters. 
+                                Minimum 8 characters.
                             </div>
 
                             <div class="invalid-feedback">
@@ -541,6 +542,10 @@
         </div>
 
     </footer>
-
+    <script>
+        document.addEventListener("DOMContentLoaded", function () {
+            requireLogin();
+        });
+    </script>
 </body>
 </html>

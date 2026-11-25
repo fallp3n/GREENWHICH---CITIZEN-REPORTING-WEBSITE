@@ -21,9 +21,10 @@
 
     <script src="scripts/menu.js" defer></script>
     <script src="scripts/report-lookup.js" defer></script>
+    <script src="scripts/auth.js" defer></script>
 
     <style>
-        
+
         body {
             background: #f7f7f2;
             color: #182722;
@@ -378,14 +379,21 @@
                  id="site-navigation"
                  aria-label="Main navigation">
 
+
                 <div class="navbar-nav align-items-md-center gap-md-4">
                     <a class="nav-link active" href="index.html" aria-current="page">Home</a>
                     <a class="nav-link" href="faq.html">FAQ</a>
                     <a class="nav-link" href="track.html">Track</a>
+
                     <a class="btn home-report-button ms-md-2" href="report.html">
                         Report <span aria-hidden="true">↗</span>
                     </a>
+
+                    <div id="account-controls" class="d-flex align-items-md-center gap-2 ms-md-2">
+                        <!-- Account buttons will appear here -->
+                    </div>
                 </div>
+
 
             </nav>
         </div>
