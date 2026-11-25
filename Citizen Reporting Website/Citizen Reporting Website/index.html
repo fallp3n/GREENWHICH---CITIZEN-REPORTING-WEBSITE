@@ -489,8 +489,9 @@
     </footer>
 
     <!-- Recent report rendering -->
+    <script src="data/reports.js"></script>
     <script>
-        const reportsStorageKey = "GREENWICH";
+        const recentReportsKey = "GREENWICH";
         const recentReportsContainer = document.querySelector("#recent-reports-list");
 
         const statusLabels = {
@@ -597,20 +598,13 @@
             let demoReports = {};
 
             try {
-                savedReports = JSON.parse(localStorage.getItem(reportsStorageKey) || "{}");
+                savedReports = JSON.parse(localStorage.getItem(recentReportsKey) || "{}");
             } catch {
                 savedReports = {};
             }
 
-            try {
-                const response = await fetch("data/reports.json");
-
-                if (response.ok) {
-                    demoReports = await response.json();
-                }
-            } catch {
-                demoReports = {};
-            }
+            // Sample reports come from data/reports.js (works without a server).
+            demoReports = window.demoReportsData || {};
 
             // Saved reports take priority over sample reports.
             const combinedReports = {

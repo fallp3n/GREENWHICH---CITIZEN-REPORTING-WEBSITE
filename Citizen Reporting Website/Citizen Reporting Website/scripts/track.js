@@ -6,17 +6,9 @@ const trackReport = document.querySelector("#track-report");
 const trackStatus = document.querySelector("#track-status");
 const trackTimeline = document.querySelector("#track-timeline");
 const trackVerdict = document.querySelector("#track-verdict");
-// `fetch` requests the sample data file. Promises let the page continue while it loads.
-const demoReportsRequest = fetch("data/reports.json")
-  .then((response) => {
-    if (!response.ok) {
-      // `throw` creates an error that can be handled by the `catch` below.
-      throw new Error("Could not load sample reports.");
-    }
 
-    return response.json();
-  })
-  .catch(() => ({}));
+// Sample reports come from data/reports.js, which track.html loads with a <script> tag.
+const demoReportsRequest = Promise.resolve(window.demoReportsData || {});
 
 const timelineSteps = [
   { icon: "📤", title: "Submitted", copy: "Your report has been successfully submitted." },
