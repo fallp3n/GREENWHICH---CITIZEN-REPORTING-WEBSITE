@@ -21,6 +21,7 @@
 
     <script src="scripts/menu.js" defer></script>
     <script src="data/reports.js" defer></script>
+    <script src="scripts/auth.js" defer></script>
     <script src="scripts/track.js" defer></script>
 
     <style>
@@ -281,4 +282,11 @@
     </footer>
 
 </body>
+
+<script>
+    document.addEventListener("DOMContentLoaded", function () {
+        requireLogin();
+    });
+</script>
+
 </html>

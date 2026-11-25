@@ -378,7 +378,7 @@ reportForm.addEventListener("submit", (event) => {
         location,
 
         // Submission information
-        submittedAt: new Date().toISOString(),
+        submittedAt: new Date().toISOString(), userId: (getCurrentUser() || {}).id || "",
         updatedAt: new Date().toISOString(),
 
         verdict: ""

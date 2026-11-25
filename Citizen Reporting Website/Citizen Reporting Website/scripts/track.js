@@ -172,8 +172,10 @@ const loadRecentReports = () => {
     console.error("Could not load recent reports:", error);
   }
 
-  // Get the saved reports and sort them from newest to oldest.
-  const reports = Object.values(savedReports);
+  const currentUser = typeof getCurrentUser === "function" ? getCurrentUser() : null;
+  const reports = Object.values(savedReports).filter(
+    (report) => currentUser && report.userId === currentUser.id
+  );
 
   reports.sort((a, b) => {
     return new Date(b.submittedAt || b.receivedDate || 0) -

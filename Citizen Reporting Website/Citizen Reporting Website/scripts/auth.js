@@ -95,8 +95,12 @@ if (loginForm) {
         message.style.color = "green";
 
         setTimeout(() => {
-            window.location.href = "index.html";
+            // Go back to the page they came from. Only pages inside this site are allowed.
+            const next = new URLSearchParams(window.location.search).get("next");
+            const safeNext = next && /^[\w.-]+\.html(\?.*)?$/.test(next) ? next : "index.html";
+            window.location.href = safeNext;
         }, 1000);
+        
     });
 }
 
@@ -145,7 +149,9 @@ function requireLogin() {
     const currentUser = getCurrentUser();
 
     if (!currentUser) {
-        window.location.href = "login.html";
+        // Remember the page they wanted so login can send them back to it.
+        const page = window.location.pathname.split("/").pop() + window.location.search;
+        window.location.href = `login.html?next=${encodeURIComponent(page)}`;
         return false;
     }
 

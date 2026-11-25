@@ -600,8 +600,27 @@
                 recentReportsContainer.appendChild(card);
             });
         };
+        // Returns true if someone is logged in. 
+        const isLoggedIn = () => {
+            try {
+                return Boolean(JSON.parse(localStorage.getItem("greenwichCurrentUser")));
+            } catch {
+                return false;
+            }
+        };
 
         const loadRecentReports = async () => {
+            // Recent reports are only for logged-in users.
+            if (!isLoggedIn()) {
+                recentReportsContainer.innerHTML = `
+                  <div class="empty-reports">
+                    <i class="bi bi-lock" aria-hidden="true"></i>
+                    <p class="mb-2 fw-bold">Log in to see your recent reports.</p>
+                    <a class="btn home-track-button mt-2" href="login.html?next=index.html">Log In</a>
+                  </div>`;
+                return;
+            }
+
             let savedReports = {};
             let demoReports = {};
 
