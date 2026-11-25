@@ -33,7 +33,7 @@ const reportFormStatus = document.querySelector("#report-form-status");
 // =========================================
 
 const maxFileSize = 10 * 1024 * 1024;
-const reportsStorageKey = "GREENWHICH";
+const reportsStorageKey = "GREENWICH";
 
 const allowedFileTypes = [
     "image/png",
@@ -222,6 +222,19 @@ const isValidPhoneNumber = (value) => {
     return /^\d{7,15}$/.test(cleanedNumber);
 };
 
+// =========================================
+// FULL NAME VALIDATION
+// =========================================
+
+const isValidFullName = (value) => {
+    const trimmed = value.trim();
+    if (trimmed.length < 2) return false;
+    if (!/\s/.test(trimmed)) return false;
+    if (/[^a-zA-ZÀ-ÿ\s\-\']/.test(trimmed)) return false;
+    if (trimmed.length > 100) return false;
+    return true;
+};
+
 
 // =========================================
 // FORM SUBMISSION
@@ -256,6 +269,15 @@ reportForm.addEventListener("submit", (event) => {
             : "Enter a valid phone number containing 7 to 15 digits."
     );
 
+    // ---------------------------------------
+    // Validate full name
+    // ---------------------------------------
+
+    senderInput.setCustomValidity(
+        isValidFullName(senderInput.value)
+            ? ""
+            : "Enter your full name (first and last name, letters only)."
+    );
 
     // ---------------------------------------
     // Validate file upload
@@ -330,6 +352,9 @@ reportForm.addEventListener("submit", (event) => {
         description:
             document.querySelector("#incident-description").value.trim(),
 
+        trikeNumber:
+            document.querySelector("#trike-number").value.trim(),
+
         // Incident date and time
         receivedDate: receivedDateInput.value,
         observedTime: timeInput.value,
@@ -353,6 +378,7 @@ reportForm.addEventListener("submit", (event) => {
 
         // Submission information
         submittedAt: new Date().toISOString(),
+        updatedAt: new Date().toISOString(),
 
         verdict: ""
     };
@@ -377,7 +403,9 @@ reportForm.addEventListener("submit", (event) => {
             reportsStorageKey,
             JSON.stringify(savedReports)
         );
-
+        // The report was sent, so the saved draft is no longer needed.
+        localStorage.removeItem("greenwichReportDraft");
+        
         // Redirect to the tracking page.
         window.location.href =
             `track.html?report=${encodeURIComponent(reportNumber)}`;
@@ -411,3 +439,59 @@ reportForm.addEventListener("change", (event) => {
     event.target.setCustomValidity("");
 
 });
+
+// =========================================
+// Keep form data in local storage so users don't lose it if they accidentally close the page or refresh.
+// =========================================
+const draftStorageKey = "greenwichReportDraft";
+
+const saveDraft = () => {
+  const draft = {};
+
+  Array.from(reportForm.elements).forEach((field) => {
+    // Skip fields that can't be saved or restored (buttons, file picker, no id).
+    if (!field.id || ["file", "submit", "button", "password"].includes(field.type)) {
+      return;
+    }
+
+    draft[field.id] = ["checkbox", "radio"].includes(field.type) ? field.checked : field.value;
+  });
+
+  try {
+    localStorage.setItem(draftStorageKey, JSON.stringify(draft));
+  } catch {
+    // If storage is unavailable, the form still works. It just won't remember drafts.
+  }
+};
+
+const restoreDraft = () => {
+  let draft = {};
+
+  try {
+    draft = JSON.parse(localStorage.getItem(draftStorageKey) || "{}");
+  } catch {
+    return;
+  }
+
+  Object.entries(draft).forEach(([id, value]) => {
+    const field = document.getElementById(id);
+
+    if (!field) {
+      return;
+    }
+
+    if (["checkbox", "radio"].includes(field.type)) {
+      field.checked = value;
+    } else {
+      field.value = value;
+    }
+  });
+
+  // Make sure the right location panel (text or map) is showing for the restored choice.
+  updateLocationMode();
+};
+
+// Save on every keystroke or change, and fill the form back in when the page loads.
+reportForm.addEventListener("input", saveDraft);
+reportForm.addEventListener("change", saveDraft);
+restoreDraft();

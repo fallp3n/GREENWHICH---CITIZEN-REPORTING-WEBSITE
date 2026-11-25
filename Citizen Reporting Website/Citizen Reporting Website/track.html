@@ -18,18 +18,62 @@
     <link rel="stylesheet" href="styles/menu.css">
     <link rel="stylesheet" href="styles/footer.css">
     <script src="scripts/menu.js" defer></script>
-
-   
     <script src="data/reports.js" defer></script>
     <script src="scripts/track.js" defer></script>
-  </head>
-  <body>
-    <header class="navbar navbar-expand-md sticky-top bg-light px-3 px-lg-5">
-      <div class="container-fluid">
-        <a class="navbar-brand d-flex align-items-center gap-2 mb-0" href="index.html#home" aria-label="Greenwich home">
-          <span class="brand-mark" aria-hidden="true">G</span>
-          <span class="brand-name fs-4 fw-bold">GREENWICH<span class="brand-period">.</span></span>
-        </a>
+
+    <style>
+        body {
+            background: #f7f7f2;
+            color: #182722;
+        }
+
+        .navbar {
+            background: #f7f7f2;
+            border-bottom: 1px solid #e5e7df;
+        }
+
+        .brand-mark {
+            background: #c9f15d;
+            color: #182722;
+        }
+
+        .brand-period {
+            color: #ff7059;
+        }
+
+        .navbar-nav .nav-link {
+            font-weight: 600;
+        }
+
+        .home-report-button {
+            background: #c9f15d;
+            border: 1px solid #c9f15d;
+            color: #182722;
+            font-weight: 700;
+        }
+
+        .home-report-button:hover {
+            background: #d8ff75;
+            border-color: #d8ff75;
+            color: #182722;
+        }
+
+        .site-footer {
+            background: #f7f7f2;
+        }
+    </style>
+</head>
+
+<body>
+
+    <!-- Navigation -->
+    <header class="navbar navbar-expand-md sticky-top px-3 px-lg-5">
+        <div class="container-fluid">
+
+            <a class="navbar-brand d-flex align-items-center gap-2 mb-0" href="index.html">
+                <span class="brand-mark" aria-hidden="true">G</span>
+                <span class="brand-name fs-4 fw-bold">GREENWICH<span class="brand-period">.</span></span>
+            </a>
 
             <button class="navbar-toggler" type="button"
                     aria-label="Open navigation menu"
@@ -57,14 +101,13 @@
 
     <!-- Track Hero -->
     <main>
-
-        <section class="track-hero d-flex align-items-center" aria-labelledby="track-title">
-            <div class="container">
-                <p class="track-eyebrow text-uppercase fw-bold mb-2">Report status</p>
-                <h1 class="track-hero-title mb-2" id="track-title">Track a report</h1>
-                <p class="track-hero-copy mb-0">Follow your submitted report.</p>
-            </div>
-        </section>
+      <section class="track-hero d-flex align-items-center" aria-labelledby="track-title">
+        <div class="container">
+          <p class="track-eyebrow text-uppercase fw-bold mb-2">Report status</p>
+          <h1 class="track-hero-title mb-2" id="track-title">Track a report</h1>
+          <p class="track-hero-copy mb-0">Follow your submitted report.</p>
+        </div>
+      </section>
 
       <section class="track-main py-5" aria-label="Report tracking details">
         <div class="container">
@@ -74,30 +117,19 @@
               <input class="form-control" id="track-report-number" name="report-number" type="text" placeholder="e.g. SR-20261025-ABCDE" required>
               <button class="btn btn-dark" type="submit">Find report</button>
             </div>
-            <p class="form-text mb-0">Try sample cases: SR-20261025-1001 (pending), SR-20261025-1002 (community review), or SR-20261025-1003 (verdict).</p>
+            <p class="form-text mb-0">Try sample cases: SR-20261025-1001 (submitted), SR-20261025-1002 (in progress), SR-20261025-1003 (resolved), or SR-20261025-1004 (case closed).</p>
           </form>
 
-                <!-- Notice -->
-                <p class="track-notice"
-                   id="track-notice"
-                   role="status"
-                   aria-live="polite"
-                   hidden></p>
+          <p class="track-notice" id="track-notice" role="status" aria-live="polite" hidden></p>
 
-                <!-- Report Result -->
-                <article class="track-report"
-                         id="track-report"
-                         aria-labelledby="track-report-heading"
-                         hidden>
-
-                    <header class="track-report-header">
-                        <div>
-                            <p class="track-category mb-1" id="track-category"></p>
-                            <h2 class="track-report-number mb-0" id="track-report-heading"></h2>
-                        </div>
-
-                        <span class="track-status" id="track-status"></span>
-                    </header>
+          <article class="track-report" id="track-report" aria-labelledby="track-report-heading" hidden>
+            <header class="track-report-header">
+              <div>
+                <p class="track-category mb-1" id="track-category"></p>
+                <h2 class="track-report-number mb-0" id="track-report-heading"></h2>
+              </div>
+              <span class="track-status" id="track-status"></span>
+            </header>
 
             <div class="row g-4 py-4">
               <div class="col-12">
@@ -117,33 +149,28 @@
                 <p class="track-detail-value mb-0" id="track-location"></p>
               </div>
               <div class="col-md-6">
-                <h3 class="track-detail-title">Submitted</h3>
-                <p class="track-detail-value mb-0" id="track-submitted"></p>
+                <h3 class="track-detail-title">Last updated</h3>
+                <p class="track-detail-value mb-0" id="track-updated"></p>
               </div>
-              <div class="col-12" id="track-message-row" hidden>
-                <h3 class="track-detail-title">Submitted message</h3>
-                <p class="track-detail-value track-message mb-0" id="track-message"></p>
-              </div>
-              <div class="col-12" id="track-screenshot-row" hidden>
-                <h3 class="track-detail-title">Screenshot attachment</h3>
-                <p class="track-detail-value mb-0" id="track-screenshot"></p>
+              <div class="col-md-6">
+                <h3 class="track-detail-title">Trike number</h3>
+                <p class="track-detail-value mb-0" id="track-trike-number"></p>
               </div>
             </div>
 
-                    <!-- Progress -->
-                    <section class="track-progress" aria-labelledby="track-progress-title">
-                        <h3 class="track-progress-title" id="track-progress-title">Progress</h3>
-                        <ol class="track-timeline" id="track-timeline"></ol>
-                    </section>
+            <section class="track-progress" aria-labelledby="track-progress-title">
+              <h3 class="track-progress-title" id="track-progress-title">Progress</h3>
+              <ol class="track-timeline" id="track-timeline"></ol>
+            </section>
 
             <section class="track-verdict mt-4" id="track-verdict" aria-labelledby="track-verdict-title" hidden>
-              <p class="track-verdict-kicker text-uppercase fw-bold mb-2">Published verdict</p>
+              <p class="track-verdict-kicker text-uppercase fw-bold mb-2">Outcome</p>
               <h3 class="track-verdict-title mb-2" id="track-verdict-title"></h3>
               <p class="track-verdict-copy mb-0" id="track-verdict-copy"></p>
             </section>
           </article>
 
-          <p class="track-demo-note small mt-4 mb-0">Sample cases load from data/reports.json. Submitted reports are stored only in this browser; reports are not sent to an agency or reviewed by a live AI system.</p>
+          <p class="track-demo-note small mt-4 mb-0">Sample cases load from data/reports.js. Submitted reports are stored only in this browser and are not sent to any agency.</p>
         </div>
       </section>
     </main>
@@ -151,8 +178,13 @@
     <!-- Footer -->
     <footer class="site-footer py-4">
         <div class="container d-flex flex-column flex-sm-row justify-content-between align-items-sm-center gap-2">
+
             <p class="footer-copyright mb-0">&copy; 2026 GREENWICH</p>
-            <p class="footer-notice mb-0">Web Development demo purposes only.</p>
+
+            <p class="footer-notice mb-0">
+                Web Development demo purposes only.
+            </p>
+
         </div>
     </footer>
 
