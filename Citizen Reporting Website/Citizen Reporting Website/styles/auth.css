@@ -1,0 +1,109 @@
+﻿
+/* GREENWICH - Login and Registration */
+
+.auth-page {
+    min-height: calc(100vh - 70px);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 50px 20px;
+}
+
+.auth-card {
+    width: 100%;
+    max-width: 460px;
+    background: var(--card-color);
+    border: 1px solid var(--border-color);
+    border-radius: 16px;
+    padding: 40px;
+    box-shadow: 0 8px 30px rgba(24, 39, 34, 0.06);
+}
+
+.auth-heading {
+    text-align: center;
+    margin-bottom: 30px;
+}
+
+.auth-icon {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 64px;
+    height: 64px;
+    background: var(--accent-color);
+    border-radius: 50%;
+    font-size: 28px;
+    margin-bottom: 20px;
+}
+
+.auth-eyebrow {
+    font-size: 12px;
+    font-weight: 700;
+    letter-spacing: 2px;
+    margin-bottom: 8px;
+}
+
+.auth-heading h1 {
+    font-size: 28px;
+    font-weight: 700;
+    margin-bottom: 10px;
+}
+
+.auth-heading > p:last-child {
+    font-size: 14px;
+    line-height: 1.6;
+}
+
+.auth-card .form-label {
+    font-weight: 600;
+    font-size: 14px;
+}
+
+.auth-card .form-control {
+    padding: 12px 14px;
+}
+
+.auth-submit {
+    background: var(--accent-color);
+    border: 1px solid var(--accent-color);
+    color: var(--text-color);
+    font-weight: 700;
+    padding: 13px;
+    border-radius: 8px;
+    margin-top: 8px;
+}
+
+    .auth-submit:hover {
+        background: #d8ff75;
+        border-color: #d8ff75;
+        color: var(--text-color);
+    }
+
+.auth-switch {
+    text-align: center;
+    margin-top: 24px;
+    font-size: 14px;
+    color: var(--muted-color);
+}
+
+    .auth-switch a {
+        color: var(--text-color);
+        font-weight: 700;
+        text-decoration: underline;
+    }
+
+.auth-message {
+    font-size: 13px;
+    margin-bottom: 8px;
+    min-height: 18px;
+}
+
+@media (max-width: 480px) {
+    .auth-card {
+        padding: 28px 22px;
+    }
+
+    .auth-heading h1 {
+        font-size: 24px;
+    }
+}
